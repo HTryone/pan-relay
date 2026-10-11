@@ -76,8 +76,8 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/plugin_config.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/search_sources.js') }}"></script>
+    <script src="{{ static_v('js/utils.js') }}"></script>
+    <script src="{{ static_v('js/api_config.js') }}"></script>
+    <script src="{{ static_v('js/plugin_config.js') }}"></script>
+    <script src="{{ static_v('js/search_sources.js') }}"></script>
 {% endblock %}

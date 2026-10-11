@@ -855,6 +855,6 @@ tr:hover td.account-table-sticky-col {
 
 {% block scripts %}
 {{ super() }}
-<script src="{{ url_for('static', filename='js/utils.js') }}?v=2.1.5"></script>
-<script src="{{ url_for('static', filename='js/system_config.js') }}?v=2.1.5"></script>
+<script src="{{ static_v('js/utils.js') }}?v=2.1.5"></script>
+<script src="{{ static_v('js/system_config.js') }}?v=2.1.5"></script>
 {% endblock %}

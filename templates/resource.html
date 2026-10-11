@@ -4,8 +4,8 @@
 {% block head %}
     {{ super() }}
     <title>淘淘资源 - 我的资源管理</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/resource.css') }}">
+    <link rel="shortcut icon" href="{{ static_v('images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ static_v('css/resource.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -372,6 +372,6 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="{{ url_for('static', filename='js/utils.js') }}?v=2.0.5"></script>
-    <script src="{{ url_for('static', filename='js/resource.js') }}?v=2.0.5"></script>
+    <script src="{{ static_v('js/utils.js') }}?v=2.0.5"></script>
+    <script src="{{ static_v('js/resource.js') }}?v=2.0.5"></script>
 {% endblock %}

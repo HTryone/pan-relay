@@ -1,5 +1,2 @@
-# 自有品牌文件：合并上游时永远以本仓库版本为准（配合本地 merge.ours.driver 配置）
-.gitattributes merge=ours
-templates/public_layout.html merge=ours
-templates/index.html merge=ours
-templates/resource.html merge=ours
+# 合并上游时正常合并，冲突逐处人工判断（品牌字样保留本仓库，功能逻辑取上游）。
+# 不使用 merge=ours：它是整文件级策略，会静默丢弃上游的 bug 修复与新功能。

@@ -35,6 +35,19 @@ app = Flask(__name__)
 
 app.secret_key = SECRET_KEY
 
+
+@app.template_global()
+def static_v(filename: str) -> str:
+    """静态资源带自动版本号：按文件修改时间生成，文件一改版本号就变，用户不会吃到旧缓存。"""
+    url = url_for('static', filename=filename)
+    try:
+        file_path = os.path.join(app.static_folder, filename.replace('/', os.sep))
+        version = int(os.path.getmtime(file_path))
+    except OSError:
+        return url
+    return f"{url}?v={version}"
+
+
 # 初始化 SQLite 数据库与表结构
 init_sqlite_db()
 

@@ -1026,7 +1026,7 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/resource.js') }}?v=2.0.4"></script>
+<script src="{{ static_v('js/resource.js') }}?v=2.0.4"></script>
 <script>
     function toggleQuickTransferOptions(enabled) {
         const submitBtn = document.getElementById('quickAddSubmitBtn');

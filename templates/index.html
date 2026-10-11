@@ -2,8 +2,8 @@
 
 {% block head %}
 <title>淘淘资源 - 影视短剧资源聚合搜索</title>
-<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="shortcut icon" href="{{ static_v('images/favicon.ico') }}">
+<link rel="stylesheet" href="{{ static_v('css/index.css') }}">
 <style>
     /* 热搜排行 */
     .hot-section { margin-top: 28px; }
@@ -58,7 +58,7 @@
     <div class="container-fluid-custom">
         <div class="search-layout">
             <div class="search-hero">
-                <img src="{{ url_for('static', filename='images/hero_search_top.webp') }}" alt="淘淘资源"
+                <img src="{{ static_v('images/hero_search_top.webp') }}" alt="淘淘资源"
                     class="search-hero-image">
             </div>
             <div class="search-area">
@@ -259,6 +259,6 @@
         }
     });
 </script>
-<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
-<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script src="{{ static_v('js/utils.js') }}"></script>
+<script src="{{ static_v('js/index.js') }}"></script>
 {% endblock %}
