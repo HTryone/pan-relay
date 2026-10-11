@@ -4,7 +4,7 @@ from src.configs.logging_setup import setup_logging
 setup_logging()
 logger = logging.getLogger(__name__)
 
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, Response
 from src.routes.api_config_routes import api_config_bp
 from src.routes.search_routes import search_bp
 from src.routes.resource_routes import resources_bp
@@ -129,6 +129,42 @@ def search_index():
 def public_api_docs_page():
     return render_template('api_docs.html')
 
+
+# ===== SEO：robots.txt 与 sitemap.xml（域名自动取当前访问域名，换域名无需改文件）=====
+@app.route('/robots.txt')
+def robots_txt():
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin",
+        "Disallow: /api/",
+        "Disallow: /login",
+        "",
+        f"Sitemap: {url_for('sitemap_xml', _external=True)}",
+        "",
+    ]
+    return Response("\n".join(lines), mimetype="text/plain")
+
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    from datetime import date
+    today = date.today().isoformat()
+    urls = [
+        (url_for('search_index', _external=True), "1.0", "daily"),
+        (url_for('public_api_docs_page', _external=True), "0.5", "monthly"),
+    ]
+    body = ['<?xml version="1.0" encoding="UTF-8"?>',
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for loc, priority, freq in urls:
+        body.append("  <url>")
+        body.append(f"    <loc>{loc}</loc>")
+        body.append(f"    <lastmod>{today}</lastmod>")
+        body.append(f"    <changefreq>{freq}</changefreq>")
+        body.append(f"    <priority>{priority}</priority>")
+        body.append("  </url>")
+    body.append("</urlset>")
+    return Response("\n".join(body), mimetype="application/xml")
 
 
 if __name__ == '__main__':
