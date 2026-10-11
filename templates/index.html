@@ -40,8 +40,10 @@
         display: inline-flex; align-items: center; justify-content: center;
         width: 22px; height: 22px; flex-shrink: 0;
         border-radius: 7px;
-        font-size: 0.72rem; font-weight: 700; color: #fff;
-        background: #cbd5e1;
+        font-size: 0.72rem; font-weight: 700;
+        /* 默认徽章用深灰底白字（原浅灰底配白字对比度仅 1.48，不可读） */
+        color: #fff;
+        background: #64748b;
     }
     .hot-item:nth-child(1) .hot-rank { background: linear-gradient(135deg, #f43f5e, #fb7185); }
     .hot-item:nth-child(2) .hot-rank { background: linear-gradient(135deg, #f97316, #fb923c); }

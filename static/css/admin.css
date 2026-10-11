@@ -816,19 +816,20 @@ body.admin-body::before {
 }
 
 .health-text-badge.health-normal {
-    color: #16a34a;
+    color: #15803d;
 }
 
 .health-text-badge.health-error {
-    color: #e11d48;
+    color: #be123c;
 }
 
 .health-text-badge.health-nodata {
-    color: #d97706;
+    color: #b45309;
 }
 
 .health-text-badge.health-unknown {
-    color: #94a3b8;
+    /* 原 #94a3b8 在白底上对比度仅 2.56，加深到可读 */
+    color: #64748b;
 }
 
 /* Status Badges */
@@ -1316,21 +1317,21 @@ textarea.form-control.font-mono {
 }
 
 .dynamic-card-status-badge.status-ok {
-    color: #059669;
+    color: #047857;
 }
 .dynamic-card-status-badge.status-ok .status-dot {
     background-color: #10b981;
 }
 
 .dynamic-card-status-badge.status-invalid {
-    color: #d97706;
+    color: #b45309;
 }
 .dynamic-card-status-badge.status-invalid .status-dot {
     background-color: #f59e0b;
 }
 
 .dynamic-card-status-badge.status-missing {
-    color: #94a3b8;
+    color: #475569;
 }
 .dynamic-card-status-badge.status-missing .status-dot {
     background-color: #cbd5e1;
@@ -2293,5 +2294,124 @@ select.custom-select-native-hidden {
     background-color: #f8fafc;
     border-color: #e2e8f0;
 }
+
+/* ==========================================================================
+   固定浅色主题覆盖
+   背景：模板存在不完整的 dark: 变体（文字变白但容器背景未变），
+   在系统深色模式下会出现「白字白底」（实测对比度 1.00）不可读。
+   Tailwind 实时编译版的 darkMode 配置在编译时机上不可靠，
+   因此在 CSS 层直接覆盖：深色模式下强制恢复浅色配色。
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+    /* 容器背景：深色 -> 浅色 */
+    .dark\:bg-slate-800,
+    .dark\:bg-slate-800\/90,
+    .dark\:bg-slate-800\/80,
+    .dark\:bg-slate-900,
+    .dark\:bg-slate-900\/30,
+    .dark\:bg-slate-700 {
+        background-color: #ffffff !important;
+    }
+
+    /* 主文字：白 -> 深色 */
+    .dark\:text-white,
+    .dark\:text-slate-100,
+    .dark\:text-slate-200,
+    .dark\:text-slate-300 {
+        color: #0f172a !important;
+    }
+
+    /* 次级文字：过亮灰 -> 可读灰 */
+    .dark\:text-slate-400 {
+        color: #475569 !important;
+    }
+
+    /* 强调色/状态徽章文字：浅底上需用更深的同色系，保证对比度 >= 4.5 */
+    .dark\:text-indigo-400  { color: #4338ca !important; }
+    .dark\:text-blue-400    { color: #1d4ed8 !important; }
+    .dark\:text-emerald-400 { color: #047857 !important; }
+    .dark\:text-amber-400   { color: #b45309 !important; }
+    .dark\:text-rose-400    { color: #be123c !important; }
+    .dark\:text-cyan-400    { color: #0e7490 !important; }
+
+    /* 边框与分隔线 */
+    .dark\:border-slate-700,
+    .dark\:border-slate-600 {
+        border-color: #e2e8f0 !important;
+    }
+    .dark\:divide-slate-700\/50 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #e2e8f0 !important;
+    }
+
+    /* 表格斑马纹与悬停 */
+    .dark\:hover\:bg-slate-700\/50:hover,
+    .dark\:hover\:bg-slate-800:hover {
+        background-color: #f1f5f9 !important;
+    }
+
+    /* 状态徽章/平台标签：深色底 -> 浅色底（覆盖 /30 与 /40 两档透明度） */
+    .dark\:bg-emerald-900\/30, .dark\:bg-emerald-900\/40 { background-color: #ecfdf5 !important; }
+    .dark\:bg-rose-900\/30,    .dark\:bg-rose-900\/40    { background-color: #fff1f2 !important; }
+    .dark\:bg-red-900\/30,     .dark\:bg-red-900\/40     { background-color: #fef2f2 !important; }
+    .dark\:bg-amber-900\/30,   .dark\:bg-amber-900\/40   { background-color: #fffbeb !important; }
+    .dark\:bg-orange-900\/30,  .dark\:bg-orange-900\/40  { background-color: #fff7ed !important; }
+    .dark\:bg-blue-900\/30,    .dark\:bg-blue-900\/40    { background-color: #eff6ff !important; }
+    .dark\:bg-indigo-900\/30,  .dark\:bg-indigo-900\/40  { background-color: #eef2ff !important; }
+    .dark\:bg-cyan-900\/30,    .dark\:bg-cyan-900\/40    { background-color: #ecfeff !important; }
+    .dark\:bg-sky-900\/30,     .dark\:bg-sky-900\/40     { background-color: #f0f9ff !important; }
+    .dark\:bg-purple-900\/30,  .dark\:bg-purple-900\/40  { background-color: #faf5ff !important; }
+    .dark\:bg-slate-900\/30,   .dark\:bg-slate-900\/40   { background-color: #f8fafc !important; }
+
+    /* 徽章文字：dark 变体给的浅色（如 indigo-300）在浅底上不可读 -> 换成深色 */
+    .dark\:text-indigo-300  { color: #3730a3 !important; }
+    .dark\:text-blue-300    { color: #1e40af !important; }
+    .dark\:text-orange-300  { color: #9a3412 !important; }
+    .dark\:text-amber-300   { color: #92400e !important; }
+    .dark\:text-sky-300     { color: #075985 !important; }
+    .dark\:text-rose-300    { color: #9f1239 !important; }
+    .dark\:text-purple-300  { color: #6b21a8 !important; }
+    .dark\:text-emerald-300 { color: #065f46 !important; }
+    .dark\:text-slate-300   { color: #334155 !important; }
+
+    /* 徽章边框：dark 变体边框在浅底上过深/过浅，统一用对应浅色边框 */
+    .dark\:border-indigo-200, .dark\:border-indigo-700  { border-color: #c7d2fe !important; }
+    .dark\:border-blue-200,   .dark\:border-blue-700    { border-color: #bfdbfe !important; }
+    .dark\:border-orange-200, .dark\:border-orange-700  { border-color: #fed7aa !important; }
+    .dark\:border-amber-200,  .dark\:border-amber-700   { border-color: #fde68a !important; }
+    .dark\:border-sky-200,    .dark\:border-sky-700     { border-color: #bae6fd !important; }
+    .dark\:border-rose-200,   .dark\:border-rose-700    { border-color: #fecdd3 !important; }
+    .dark\:border-purple-200, .dark\:border-purple-700  { border-color: #e9d5ff !important; }
+    .dark\:border-emerald-200,.dark\:border-emerald-700 { border-color: #a7f3d0 !important; }
+
+    /* 次级/时间戳文字：过亮灰在浅底上对比度不足（2.56），加深 */
+    .text-slate-400 {
+        color: #64748b !important;
+    }
+    .dark\:text-slate-400,
+    .dark\:text-slate-500 {
+        color: #475569 !important;
+    }
+
+    /* Tab 按钮文字：4.34 -> 提升到 4.5 以上 */
+    .source-tab-btn {
+        color: #475569 !important;
+    }
+}
+
+/* ==========================================================================
+   小字号标签/徽章对比度加固（浅色模式下原生就偏淡，实测 3.5~4.3）
+   仅针对小字（10~12px）的彩色/灰色标签，保证可读性达 WCAG AA
+   ========================================================================== */
+.text-emerald-600 { color: #047857 !important; }
+.text-rose-600    { color: #be123c !important; }
+.text-amber-600   { color: #b45309 !important; }
+.text-blue-600    { color: #1d4ed8 !important; }
+.text-indigo-600  { color: #4338ca !important; }
+.text-cyan-600    { color: #0e7490 !important; }
+.text-slate-500   { color: #475569 !important; }
+/* 排序箭头等装饰性小图标：slate-300 近白不可见 -> 提到可读灰 */
+.text-slate-300   { color: #64748b !important; }
+/* 小字号等宽标签（API 端点等）在浅灰底上偏淡，加深 */
+.text-slate-400   { color: #475569 !important; }
 
 

@@ -8,6 +8,14 @@
     <meta name="referrer" content="no-referrer">
     <title>{% block title %}淘淘资源控制台{% endblock %}</title>
 
+    <script>
+        // 固定浅色主题：避免系统深色模式触发不完整的 dark: 变体（白字白底）
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            darkMode: 'class',
+            corePlugins: { preload: false }
+        };
+    </script>
     <script src="{{ static_v('vendor/tailwind/tailwind.min.js') }}"></script>
     <link rel="stylesheet" href="{{ static_v('vendor/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ static_v('css/admin.css') }}?v=2.1.2">
@@ -107,7 +115,7 @@
             <nav class="admin-sidebar-nav flex-1 px-3 py-4 space-y-4 overflow-y-auto">
                 <!-- 核心工作区 -->
                 <div class="space-y-1">
-                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">核心工作区</div>
+                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-500 dark:text-slate-300 uppercase tracking-wider">核心工作区</div>
                     <a href="{{ url_for('dashboard.dashboard_page') }}"
                         class="flex items-center px-3.5 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 transition-colors {{ 'sidebar-item-active' if active_page == 'dashboard' else '' }}">
                         <i
@@ -124,7 +132,7 @@
 
                 <!-- 对外服务通道 -->
                 <div class="space-y-1">
-                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">对外服务通道
+                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-500 dark:text-slate-300 uppercase tracking-wider">对外服务通道
                     </div>
                     <a href="{{ url_for('system_config.frontend_config_page') }}"
                         class="flex items-center px-3.5 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 transition-colors {{ 'sidebar-item-active' if active_page == 'config_frontend' else '' }}">
@@ -142,7 +150,7 @@
 
                 <!-- 通用配置与系统 -->
                 <div class="space-y-1">
-                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">通用配置与系统
+                    <div class="px-3 pb-1 text-[11px] font-semibold text-slate-500 dark:text-slate-300 uppercase tracking-wider">通用配置与系统
                     </div>
                     <a href="{{ url_for('system_config.system_config_page') }}"
                         class="flex items-center px-3.5 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 transition-colors {{ 'sidebar-item-active' if active_page == 'config_system' else '' }}">

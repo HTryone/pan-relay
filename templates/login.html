@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录 - 淘淘资源控制台</title>
     <link rel="shortcut icon" href="{{ static_v('images/favicon.ico') }}">
+    <script>
+        // 固定浅色主题：避免系统深色模式触发不完整的 dark: 变体（白字白底）
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            darkMode: 'class',
+            corePlugins: { preload: false }
+        };
+    </script>
     <script src="{{ static_v('vendor/tailwind/tailwind.min.js') }}"></script>
     <link rel="stylesheet" href="{{ static_v('vendor/fontawesome/css/all.min.css') }}">
     <style>
