@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %}
 {% set active_page = 'config_frontend' %}
 
-{% block title %}前台 Web 配置 - Pan-Relay Console{% endblock %}
+{% block title %}前台 Web 配置 - 淘淘资源控制台{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto space-y-6">
@@ -332,6 +332,54 @@
                         <label class="plugin-switch" title="切换 GitHub 标识展示">
                             <input type="checkbox" id="enableFrontendGithubToggle" onchange="saveFrontendGithubConfig()"
                                 {% if enable_frontend_github %}checked{% endif %}>
+                            <span class="plugin-switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item-row" id="customButtonSettingContainer">
+                    <div class="space-y-2 min-w-0 pr-4">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-semibold text-slate-800 text-sm">自定义顶部按钮</span>
+                            <span class="help-tooltip"
+                                data-tooltip="在前台顶部右侧（GitHub 徽章旁边）显示一个自定义按钮，可设置按钮文字与跳转链接，用于挂载自己的导航、频道或推广落地页。">
+                                <i class="far fa-circle-question text-xs"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <input type="text" id="customButtonText" class="form-control form-control-sm"
+                                style="max-width: 160px;" placeholder="按钮文字（如：更多资源）"
+                                value="{{ custom_button.text }}" maxlength="12">
+                            <input type="text" id="customButtonUrl" class="form-control form-control-sm"
+                                style="max-width: 320px;" placeholder="跳转链接（https://...）"
+                                value="{{ custom_button.url }}">
+                        </div>
+                        <p class="text-xs text-slate-500">建议与 GitHub 徽章二选一展示，保持顶栏干净</p>
+                    </div>
+                    <div class="flex items-center flex-shrink-0">
+                        <label class="plugin-switch" title="切换自定义按钮展示">
+                            <input type="checkbox" id="enableCustomButtonToggle" onchange="saveCustomButtonConfig()"
+                                {% if custom_button.enabled %}checked{% endif %}>
+                            <span class="plugin-switch-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item-row" id="adminNavButtonSettingContainer">
+                    <div class="space-y-1 min-w-0 pr-4">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="font-semibold text-slate-800 text-sm">「管理后台」入口按钮</span>
+                            <span class="help-tooltip"
+                                data-tooltip="控制前台顶部「管理后台」按钮的显示。仅对已登录用户可见；隐藏后不影响直接访问 /admin 进入后台。">
+                                <i class="far fa-circle-question text-xs"></i>
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500">登录用户在前台看到的后台入口；隐藏后可手动输入 /admin 地址进入</p>
+                    </div>
+                    <div class="flex items-center flex-shrink-0">
+                        <label class="plugin-switch" title="切换管理后台按钮展示">
+                            <input type="checkbox" id="enableAdminNavButtonToggle" onchange="saveAdminNavButtonConfig()"
+                                {% if enable_admin_nav_button %}checked{% endif %}>
                             <span class="plugin-switch-slider"></span>
                         </label>
                     </div>

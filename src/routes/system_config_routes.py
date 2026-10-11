@@ -33,6 +33,11 @@ from src.services.system_config_service import (
     get_frontend_github_config,
     is_frontend_github_enabled,
     save_frontend_github_config,
+    get_custom_button_config,
+    save_custom_button_config,
+    get_admin_nav_button_config,
+    is_admin_nav_button_enabled,
+    save_admin_nav_button_config,
     get_frontend_link_check_config,
 
     get_frontend_display_netdisk_config,
@@ -223,6 +228,8 @@ def frontend_config_page():
         allow_excel_download=allow_excel.get("allow_excel_download", True),
         enable_pc_qr_code=is_pc_qr_code_enabled(),
         enable_frontend_github=is_frontend_github_enabled(),
+        custom_button=get_custom_button_config(),
+        enable_admin_nav_button=is_admin_nav_button_enabled(),
         frontend_link_mode=frontend_link_mode if isinstance(frontend_link_mode, str) else frontend_link_mode.get("mode", "view"),
         active_page="config_frontend",
     )
@@ -354,6 +361,54 @@ def update_frontend_github_api():
         return jsonify({"success": False, "message": "前台 GitHub 标识配置保存失败"}), 400
 
     return jsonify({"success": True, "message": f"前台 GitHub 标识展示已{'开启' if enabled else '关闭'}"})
+
+
+@system_config_bp.route("/admin/api/admin-nav-button-config", methods=["GET"])
+@token_required
+def get_admin_nav_button_api():
+    config = get_admin_nav_button_config()
+    return jsonify({"success": True, "enabled": config["enabled"]})
+
+
+@system_config_bp.route("/admin/api/admin-nav-button-config", methods=["PUT"])
+@token_required
+def update_admin_nav_button_api():
+    data = request.get_json() or {}
+    enabled = bool(data.get("enabled", True))
+
+    if not save_admin_nav_button_config(enabled):
+        return jsonify({"success": False, "message": "管理后台按钮配置保存失败"}), 400
+
+    return jsonify({"success": True, "message": f"前台「管理后台」按钮已{'开启' if enabled else '隐藏'}"})
+
+
+@system_config_bp.route("/admin/api/custom-button-config", methods=["GET"])
+@token_required
+def get_custom_button_api():
+    config = get_custom_button_config()
+    return jsonify({
+        "success": True,
+        "enabled": config["enabled"],
+        "text": config["text"],
+        "url": config["url"],
+    })
+
+
+@system_config_bp.route("/admin/api/custom-button-config", methods=["PUT"])
+@token_required
+def update_custom_button_api():
+    data = request.get_json() or {}
+    enabled = bool(data.get("enabled", False))
+    text = str(data.get("text", "") or "").strip() or "更多资源"
+    url = str(data.get("url", "") or "").strip()
+
+    if enabled and not url:
+        return jsonify({"success": False, "message": "按钮已启用但跳转链接为空，请填写链接后保存"}), 400
+
+    if not save_custom_button_config(enabled, text, url):
+        return jsonify({"success": False, "message": "自定义按钮配置保存失败"}), 400
+
+    return jsonify({"success": True, "message": "自定义按钮配置已保存"})
 
 
 

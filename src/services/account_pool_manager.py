@@ -304,7 +304,7 @@ class AccountPoolManager:
 
             elif cloud_name == "百度网盘":
                 if hasattr(client, "get_or_create_dir"):
-                    client.get_or_create_dir("PanRelay_Health")
+                    client.get_or_create_dir("Taotao_Health")
 
             elif cloud_name == "光鸭云盘":
                 if hasattr(client, "_get_access_token"):

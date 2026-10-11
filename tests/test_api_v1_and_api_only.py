@@ -71,7 +71,7 @@ class ApiV1AndApiOnlyTest(unittest.TestCase):
         self.assertEqual(200, resp.status_code)
         data = resp.get_json()
         self.assertTrue(data["success"])
-        self.assertEqual("pan-relay", data["service"])
+        self.assertEqual("taotao", data["service"])
         self.assertIn("endpoints", data)
 
     @patch("src.routes.api_v1_routes.search_in_database")
@@ -161,12 +161,12 @@ class ApiV1AndApiOnlyTest(unittest.TestCase):
         # 浏览器访问 GET /api/v1/docs -> 返回 HTML 网页
         resp = self.client.get("/api/v1/docs", headers={"Accept": "text/html"})
         self.assertEqual(200, resp.status_code)
-        self.assertIn("Pan-Relay 开发者 API", resp.get_data(as_text=True))
+        self.assertIn("淘淘资源 开发者 API", resp.get_data(as_text=True))
 
         # 独立路径 GET /docs -> 返回 HTML 网页
         resp_docs = self.client.get("/docs")
         self.assertEqual(200, resp_docs.status_code)
-        self.assertIn("Pan-Relay 开发者 API", resp_docs.get_data(as_text=True))
+        self.assertIn("淘淘资源 开发者 API", resp_docs.get_data(as_text=True))
 
         # API 客户端请求 format=json -> 返回 JSON
         resp_json = self.client.get("/api/v1/docs?format=json")

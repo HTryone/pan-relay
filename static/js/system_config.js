@@ -396,6 +396,101 @@ async function saveFrontendGithubConfig() {
     }
 }
 
+async function loadCustomButtonConfig() {
+    try {
+        const response = await fetch('/admin/api/custom-button-config');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const toggle = document.getElementById('enableCustomButtonToggle');
+        const textInput = document.getElementById('customButtonText');
+        const urlInput = document.getElementById('customButtonUrl');
+        if (toggle) toggle.checked = Boolean(data.enabled);
+        if (textInput) textInput.value = data.text || '';
+        if (urlInput) urlInput.value = data.url || '';
+    } catch (error) {
+        console.error('加载自定义按钮配置失败:', error);
+    }
+}
+
+async function saveCustomButtonConfig() {
+    const toggle = document.getElementById('enableCustomButtonToggle');
+    const textInput = document.getElementById('customButtonText');
+    const urlInput = document.getElementById('customButtonUrl');
+    const enabled = toggle ? toggle.checked : false;
+    const text = textInput ? textInput.value.trim() : '';
+    const url = urlInput ? urlInput.value.trim() : '';
+
+    if (enabled && !url) {
+        showToast('开启按钮前请先填写跳转链接', 'warning');
+        if (toggle) toggle.checked = false;
+        return;
+    }
+
+    try {
+        const response = await fetch('/admin/api/custom-button-config', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ enabled, text, url })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        }
+
+        showToast(data.message || '配置已保存', 'success');
+    } catch (error) {
+        console.error('保存自定义按钮配置失败:', error);
+        showToast(`保存配置失败: ${error.message}`, 'danger');
+        await loadCustomButtonConfig();
+    }
+}
+
+
+async function loadAdminNavButtonConfig() {
+    try {
+        const response = await fetch('/admin/api/admin-nav-button-config');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const toggle = document.getElementById('enableAdminNavButtonToggle');
+        if (toggle) {
+            toggle.checked = Boolean(data.enabled);
+        }
+    } catch (error) {
+        console.error('加载管理后台按钮配置失败:', error);
+    }
+}
+
+async function saveAdminNavButtonConfig() {
+    const toggle = document.getElementById('enableAdminNavButtonToggle');
+    const enabled = toggle ? toggle.checked : true;
+
+    try {
+        const response = await fetch('/admin/api/admin-nav-button-config', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ enabled })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        }
+
+        showToast(data.message || '配置已保存', 'success');
+    } catch (error) {
+        console.error('保存管理后台按钮配置失败:', error);
+        showToast(`保存配置失败: ${error.message}`, 'danger');
+        await loadAdminNavButtonConfig();
+    }
+}
+
 
 async function loadFrontendLinkCheckConfig() {
     try {
@@ -588,7 +683,7 @@ async function loadTransferTargetDirConfig() {
         const data = await response.json();
         const input = document.getElementById('transferTargetDirInput');
         const badge = document.getElementById('transferTargetDirBadge');
-        const dir = (data.target_dir !== undefined && data.target_dir !== null) ? data.target_dir : 'Pan-Relay分享';
+        const dir = (data.target_dir !== undefined && data.target_dir !== null) ? data.target_dir : '淘淘资源分享';
 
         if (input) {
             input.value = dir;
@@ -604,7 +699,7 @@ async function loadTransferTargetDirConfig() {
 
 async function saveTransferTargetDirConfig() {
     const input = document.getElementById('transferTargetDirInput');
-    const target_dir = input ? input.value.trim() : 'Pan-Relay分享';
+    const target_dir = input ? input.value.trim() : '淘淘资源分享';
 
     try {
         const response = await fetch('/admin/api/transfer-target-dir', {
@@ -1565,6 +1660,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadAllowExcelDownloadConfig();
     loadPcQrCodeConfig();
     loadFrontendGithubConfig();
+    loadCustomButtonConfig();
+    loadAdminNavButtonConfig();
     loadFrontendLinkCheckConfig();
     loadTransferTargetDirConfig();
     loadFrontendDisplayNetdisks();

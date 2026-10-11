@@ -16,7 +16,7 @@ FRONTEND_LINK_MODE_KEY = "frontend_link_mode"
 PUBLIC_SEARCH_API_KEY = "public_search_api"
 ALLOW_EXCEL_DOWNLOAD_KEY = "allow_excel_download"
 TRANSFER_TARGET_DIR_KEY = "transfer_target_dir"
-DEFAULT_TRANSFER_TARGET_DIR = "Pan-Relay分享"
+DEFAULT_TRANSFER_TARGET_DIR = "淘淘资源分享"
 FRONTEND_LINK_MODE_OPTIONS = {"copy", "view"}
 API_MODE_CONFIG_KEY = "api_mode_config"
 SEARCH_API_SCOPE_KEY = "search_api_scope"
@@ -28,6 +28,13 @@ FRONTEND_LINK_CHECK_CONFIG_KEY = "frontend_link_check_config"
 SECURITY_CONFIG_KEY = "security_config"
 ENABLE_PC_QR_CODE_KEY = "enable_pc_qr_code"
 ENABLE_FRONTEND_GITHUB_KEY = "enable_frontend_github"
+CUSTOM_BUTTON_CONFIG_KEY = "custom_button_config"
+ENABLE_ADMIN_NAV_BUTTON_KEY = "enable_admin_nav_button"
+DEFAULT_CUSTOM_BUTTON = {
+    "enabled": False,
+    "text": "更多资源",
+    "url": "",
+}
 
 
 
@@ -273,6 +280,66 @@ def is_frontend_github_enabled() -> bool:
 def save_frontend_github_config(enabled: bool) -> bool:
     return set_config_value(
         ENABLE_FRONTEND_GITHUB_KEY,
+        {"enabled": bool(enabled)},
+    )
+
+
+def get_custom_button_config() -> Dict[str, Any]:
+    """获取前台自定义按钮配置（顶部右侧，GitHub 徽章旁边）"""
+    raw_value = get_config_value(CUSTOM_BUTTON_CONFIG_KEY)
+    if not raw_value:
+        return DEFAULT_CUSTOM_BUTTON.copy()
+
+    try:
+        parsed = json.loads(raw_value)
+    except (TypeError, json.JSONDecodeError):
+        logger.warning("自定义按钮配置格式无效，已回退到默认值")
+        return DEFAULT_CUSTOM_BUTTON.copy()
+
+    if not isinstance(parsed, dict):
+        return DEFAULT_CUSTOM_BUTTON.copy()
+
+    return {
+        "enabled": bool(parsed.get("enabled", False)),
+        "text": str(parsed.get("text", DEFAULT_CUSTOM_BUTTON["text"])).strip() or DEFAULT_CUSTOM_BUTTON["text"],
+        "url": str(parsed.get("url", "")).strip(),
+    }
+
+
+def save_custom_button_config(enabled: bool, text: str, url: str) -> bool:
+    clean_text = (text or "").strip() or DEFAULT_CUSTOM_BUTTON["text"]
+    return set_config_value(
+        CUSTOM_BUTTON_CONFIG_KEY,
+        {
+            "enabled": bool(enabled),
+            "text": clean_text,
+            "url": (url or "").strip(),
+        },
+    )
+
+
+def get_admin_nav_button_config() -> Dict[str, bool]:
+    """获取前台「管理后台」按钮展示配置（仅登录用户可见的入口，隐藏不影响后台访问）"""
+    raw_value = get_config_value(ENABLE_ADMIN_NAV_BUTTON_KEY)
+    if not raw_value:
+        return {"enabled": True}
+
+    try:
+        parsed = json.loads(raw_value)
+    except (TypeError, json.JSONDecodeError):
+        logger.warning("管理后台按钮配置格式无效，已回退到默认值")
+        return {"enabled": True}
+
+    return {"enabled": bool(parsed.get("enabled", True))}
+
+
+def is_admin_nav_button_enabled() -> bool:
+    return get_admin_nav_button_config()["enabled"]
+
+
+def save_admin_nav_button_config(enabled: bool) -> bool:
+    return set_config_value(
+        ENABLE_ADMIN_NAV_BUTTON_KEY,
         {"enabled": bool(enabled)},
     )
 

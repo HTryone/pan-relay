@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %}
 {% set active_page = active_page or 'config_system' %}
 
-{% block title %}系统配置 - Pan-Relay Console{% endblock %}
+{% block title %}系统配置 - 淘淘资源控制台{% endblock %}
 
 {% block content %}
 <div id="systemConfigContainer" class="{{ 'max-w-7xl' if current_tab == 'accounts' else 'max-w-4xl' }} mx-auto space-y-6 transition-[max-width] duration-200">
@@ -65,7 +65,7 @@
                                             class="fas fa-folder"></i></span>
                                     <input type="text" id="transferTargetDirInput"
                                         class="form-control form-control-sm pl-8 text-xs font-medium"
-                                        style="min-width: 170px;" placeholder="例如: Pan-Relay分享" value="Pan-Relay分享">
+                                        style="min-width: 170px;" placeholder="例如: 淘淘资源分享" value="淘淘资源分享">
                                 </div>
                                 <button type="button" class="btn btn-primary btn-sm px-3"
                                     onclick="saveTransferTargetDirConfig()">

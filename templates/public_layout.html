@@ -169,6 +169,31 @@
             transition: all 0.2s ease;
         }
 
+        /* 自定义顶部按钮（后台可配文字与链接） */
+        .custom-nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #f59e0b, #de9f2d);
+            border: none;
+            border-radius: 9999px;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(222, 159, 45, 0.3);
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+        }
+
+        .custom-nav-btn:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 20px rgba(222, 159, 45, 0.42);
+            color: #fff;
+            filter: brightness(1.05);
+        }
+
         .admin-nav-link:hover {
             color: #0f172a;
             border-color: rgba(148, 163, 184, 0.4);
@@ -358,6 +383,12 @@
             <!-- 预留左侧区域，保持搜索区干净居中 -->
         </div>
         <div class="public-nav-right flex items-center gap-2">
+            {% if custom_button and custom_button.enabled and custom_button.url %}
+            <a href="{{ custom_button.url }}" target="_blank" rel="noopener noreferrer" class="custom-nav-btn" title="{{ custom_button.text }}">
+                <i class="fas fa-compass" aria-hidden="true"></i>
+                <span>{{ custom_button.text }}</span>
+            </a>
+            {% endif %}
             {% if enable_frontend_github %}
             <a href="https://github.com/ucmao/pan-relay" target="_blank" rel="noopener noreferrer" class="github-star-pill" title="前往 Pan-Relay GitHub 仓库" aria-label="前往 Pan-Relay GitHub 仓库，点亮 Star">
                 <span class="github-pill-left">
@@ -369,7 +400,7 @@
                 </span>
             </a>
             {% endif %}
-            {% if is_logged_in %}
+            {% if is_logged_in and enable_admin_nav_button %}
             <a href="{{ url_for('resources.resources_page') }}" class="admin-nav-link" title="进入管理后台">
                 <i class="fas fa-cog"></i>
                 <span>管理后台</span>
@@ -384,7 +415,7 @@
 <div class="footer-container">
     <div class="container-fluid-custom">
         <div class="footer-copyright">
-            <a id="disclaimerLink">&copy; Pan-Relay</a>
+            <a id="disclaimerLink">&copy; 淘淘资源</a>
             {% if enable_frontend_github %}
             <span class="footer-divider">|</span>
             <a href="https://github.com/ucmao/pan-relay" target="_blank" rel="noopener noreferrer">
@@ -403,7 +434,7 @@
                 <button type="button" class="btn-close" data-ui-dismiss="modal" aria-label="关闭"></button>
             </div>
             <div class="modal-body disclaimer-modal-body">
-                <p class="disclaimer-intro">Pan-Relay 是一款基于多源 API 的自动化检索与网盘中继工具{% if enable_frontend_github %}，本项目已在 GitHub 完全开源{% endif %}。</p>
+                <p class="disclaimer-intro">本站是一个多源资源聚合检索工具{% if enable_frontend_github %}，基于开源项目 Pan-Relay 构建{% endif %}。</p>
                 {% if enable_frontend_github %}
                 <div class="disclaimer-star-box">
                     <a href="https://github.com/ucmao/pan-relay" target="_blank" rel="noopener noreferrer" class="disclaimer-repo-link" title="前往 GitHub 查看源码">
@@ -419,7 +450,7 @@
                 <div class="disclaimer-note-block">
                     <ol class="disclaimer-list">
                         <li>本工具仅作为资源检索辅助工具，所有搜索结果均实时调用第三方公开 API 自动生成，本站<strong>不存储、不上传、不分发</strong>任何实质资源内容。</li>
-                        <li>搜索结果指向的第三方链接内容由原平台负责，Pan-Relay 无法控制其内容，不对其合法性、准确性或安全性负责。</li>
+                        <li>搜索结果指向的第三方链接内容由原平台负责，本站无法控制其内容，不对其合法性、准确性或安全性负责。</li>
                         <li>本工具<strong>仅供技术研究、学习与交流使用</strong>，严禁用于任何形式的商业牟利行为。</li>
                         <li>请在法律允许的范围内合理使用，因违规使用所产生的法律后果由用户自行承担。</li>
                     </ol>

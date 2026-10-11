@@ -1,9 +1,56 @@
 {% extends "public_layout.html" %}
 
 {% block head %}
-<title>Pan-Relay - 搜索页面</title>
+<title>淘淘资源 - 影视短剧资源聚合搜索</title>
 <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<style>
+    /* 热搜排行 */
+    .hot-section { margin-top: 28px; }
+    .hot-heading {
+        display: flex; align-items: center; gap: 9px;
+        margin-bottom: 14px; padding-left: 2px;
+    }
+    .hot-heading .hot-flame { color: #f43f5e; font-size: 0.98rem; }
+    .hot-heading h2 { font-size: 1.02rem; font-weight: 700; color: #1e293b; margin: 0; }
+    .hot-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 10px;
+    }
+    .hot-item {
+        display: flex; align-items: center; gap: 11px;
+        padding: 11px 14px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 12px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+        min-width: 0;
+    }
+    .hot-item:hover {
+        transform: translateY(-2px);
+        border-color: rgba(222, 159, 45, 0.5);
+        box-shadow: 0 8px 20px rgba(222, 159, 45, 0.15);
+    }
+    .hot-rank {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 22px; height: 22px; flex-shrink: 0;
+        border-radius: 7px;
+        font-size: 0.72rem; font-weight: 700; color: #fff;
+        background: #cbd5e1;
+    }
+    .hot-item:nth-child(1) .hot-rank { background: linear-gradient(135deg, #f43f5e, #fb7185); }
+    .hot-item:nth-child(2) .hot-rank { background: linear-gradient(135deg, #f97316, #fb923c); }
+    .hot-item:nth-child(3) .hot-rank { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+    .hot-kw {
+        flex: 1; min-width: 0;
+        font-size: 0.87rem; font-weight: 600; color: #1e293b;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +58,7 @@
     <div class="container-fluid-custom">
         <div class="search-layout">
             <div class="search-hero">
-                <img src="{{ url_for('static', filename='images/hero_search_top.webp') }}" alt="Pan-Relay"
+                <img src="{{ url_for('static', filename='images/hero_search_top.webp') }}" alt="淘淘资源"
                     class="search-hero-image">
             </div>
             <div class="search-area">
@@ -95,6 +142,21 @@
                 </div>
             </section>
             <div id="statusBar" class="search-status-toast hidden toast-hidden"></div>
+
+            <!-- 热门搜索榜：按真实搜索次数自动排序（无搜索记录时整块隐藏） -->
+            {% if hot_keywords %}
+            <section class="hot-section" id="hotSection">
+                <div class="hot-heading">
+                    <i class="fas fa-fire hot-flame"></i>
+                    <h2>热门搜索 TOP {{ hot_keywords | length }}</h2>
+                </div>
+                <div class="hot-list">
+                    {% for item in hot_keywords %}
+                    <a class="hot-item" data-search="{{ item.keyword }}"><span class="hot-rank">{{ loop.index }}</span><span class="hot-kw">{{ item.keyword }}</span></a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -174,6 +236,28 @@
     window.ENABLED_CHECK_PANS = {{ enabled_check_pans | tojson }};
     window.ENABLED_DYNAMIC_TRANSFER_PANS = {{ enabled_dynamic_transfer_pans | tojson }};
     window.ENABLE_PC_QR_CODE = {{ 'true' if enable_pc_qr_code else 'false' }};
+
+    // 今日热搜：点击直接搜索该关键词；搜索开始后隐藏热搜区
+    document.addEventListener('DOMContentLoaded', () => {
+        const hotSection = document.getElementById('hotSection');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        document.querySelectorAll('.hot-item').forEach(item => {
+            item.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (!searchInput || !searchButton) return;
+                searchInput.value = item.dataset.search || '';
+                hotSection?.classList.add('hidden');
+                searchButton.click();
+            });
+        });
+
+        // 有历史关键词（刷新/返回）时不显示热搜区
+        if (searchInput && searchInput.value.trim()) {
+            hotSection?.classList.add('hidden');
+        }
+    });
 </script>
 <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>

@@ -27,6 +27,8 @@ from src.services.system_config_service import (
     is_frontend_github_enabled,
     is_frontend_enabled,
     is_api_only_enabled,
+    get_custom_button_config,
+    is_admin_nav_button_enabled,
 )
 
 app = Flask(__name__)
@@ -64,6 +66,8 @@ def inject_login_status():
     return {
         'is_logged_in': is_logged_in,
         'enable_frontend_github': is_frontend_github_enabled(),
+        'custom_button': get_custom_button_config(),
+        'enable_admin_nav_button': is_admin_nav_button_enabled(),
     }
 
 
@@ -86,6 +90,14 @@ def search_index():
     link_check_config = get_frontend_link_check_config()
     dynamic_transfer_config = get_dynamic_transfer_netdisk_config()
 
+    # 首页热搜榜：按真实搜索次数统计（复用日志模块已有的统计函数）
+    hot_keywords = []
+    try:
+        from src.db.logs import get_top_hot_keywords
+        hot_keywords = get_top_hot_keywords(days=1, limit=10)
+    except Exception as err:
+        logger.warning(f"首页热搜榜加载失败，已跳过: {err}")
+
     return render_template(
         'index.html',
         frontend_link_mode=link_mode,
@@ -95,6 +107,7 @@ def search_index():
         enabled_dynamic_transfer_pans=dynamic_transfer_config.get("enabled_netdisks", []),
         enable_pc_qr_code=is_pc_qr_code_enabled(),
         enable_frontend_github=is_frontend_github_enabled(),
+        hot_keywords=hot_keywords,
     )
 
 
@@ -107,5 +120,7 @@ def public_api_docs_page():
 
 if __name__ == '__main__':
     port = int(os.getenv("PORT", 5004))
-    logger.info(f"启动 Flask 应用，监听端口: {port}")
-    app.run(host='0.0.0.0', port=port)
+    # 监听地址可用 HOST 覆盖（本地预览设为 127.0.0.1 可避免 Windows 防火墙弹窗），默认保持 0.0.0.0 不变
+    host = os.getenv("HOST", "0.0.0.0")
+    logger.info(f"启动 Flask 应用，监听地址: {host}，端口: {port}")
+    app.run(host=host, port=port)
