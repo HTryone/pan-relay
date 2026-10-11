@@ -51,9 +51,9 @@
             }
         };
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="{{ static_v('vendor/tailwind/tailwind.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ static_v('vendor/fontawesome/css/all.min.css') }}">
+    <script src="{{ static_v('vendor/qrcode/qrcode.min.js') }}"></script>
     <link rel="stylesheet" href="{{ static_v('css/app.css') }}">
     {% block head %}{% endblock %}
     <style>
