@@ -1,0 +1,5 @@
+# 自有品牌文件：合并上游时永远以本仓库版本为准（配合本地 merge.ours.driver 配置）
+.gitattributes merge=ours
+templates/public_layout.html merge=ours
+templates/index.html merge=ours
+templates/resource.html merge=ours
