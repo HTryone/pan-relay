@@ -55,12 +55,12 @@
                     </h2>
                     <p class="admin-panel-desc">按关键词检索、单条维护或批量导出清理已有入库资源。</p>
                 </div>
-                <div class="flex items-center space-x-2.5 flex-wrap gap-y-2">
-                    <div class="admin-search-wrap">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                    <div class="admin-search-wrap w-full sm:w-auto">
                         <i class="fas fa-search"></i>
                         <input type="text" class="admin-search-input" id="searchInput" placeholder="按资源标题回车或输入搜索...">
                     </div>
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center gap-2 flex-wrap">
                         <button class="btn btn-secondary btn-sm" id="auditAllResourcesBtn" type="button" title="对库内资源执行健康巡检测活">
                             <i class="fas fa-stethoscope text-[10px]"></i> 批量巡检
                         </button>
@@ -106,29 +106,29 @@
                 <table class="table">
                     <thead>
                         <tr class="select-none">
-                            <th style="width: 44px; text-align: center;">
+                            <th style="width: 44px; min-width: 44px; text-align: center;">
                                 <input class="form-check-input" type="checkbox" id="selectCurrentPageCheckbox" aria-label="选择当前页资源">
                             </th>
-                            <th style="width: 65px; cursor: pointer;" onclick="handleResourceSort('id')" title="点击按 ID 排序">
+                            <th style="width: 65px; min-width: 65px; cursor: pointer;" onclick="handleResourceSort('id')" title="点击按 ID 排序">
                                 ID <span id="resourceSortIconId" class="text-blue-600 font-bold ml-0.5">↓</span>
                             </th>
-                            <th style="cursor: pointer;" onclick="handleResourceSort('name')" title="点击按标题排序">
+                            <th style="width: 240px; min-width: 180px; cursor: pointer;" onclick="handleResourceSort('name')" title="点击按标题排序">
                                 标题 <span id="resourceSortIconName" class="text-slate-300 ml-0.5">↕</span>
                             </th>
-                            <th>链接</th>
-                            <th style="width: 105px; cursor: pointer;" onclick="handleResourceSort('cloud_name')" title="点击按网盘排序">
+                            <th style="width: 220px; min-width: 180px;">链接</th>
+                            <th style="width: 105px; min-width: 105px; cursor: pointer;" onclick="handleResourceSort('cloud_name')" title="点击按网盘排序">
                                 网盘 <span id="resourceSortIconCloudName" class="text-slate-300 ml-0.5">↕</span>
                             </th>
-                            <th style="width: 95px; cursor: pointer;" onclick="handleResourceSort('type')" title="点击按类型排序">
+                            <th style="width: 95px; min-width: 95px; cursor: pointer;" onclick="handleResourceSort('type')" title="点击按类型排序">
                                 类型 <span id="resourceSortIconType" class="text-slate-300 ml-0.5">↕</span>
                             </th>
-                            <th style="width: 110px; cursor: pointer;" onclick="handleResourceSort('health_status')" title="点击按健康状态排序">
+                            <th style="width: 110px; min-width: 110px; cursor: pointer;" onclick="handleResourceSort('health_status')" title="点击按健康状态排序">
                                 健康状态 <span id="resourceSortIconHealthStatus" class="text-slate-300 ml-0.5">↕</span>
                             </th>
-                            <th style="width: 95px; cursor: pointer;" onclick="handleResourceSort('is_replaced')" title="点击按同步状态排序">
+                            <th style="width: 95px; min-width: 95px; cursor: pointer;" onclick="handleResourceSort('is_replaced')" title="点击按同步状态排序">
                                 同步状态 <span id="resourceSortIconIsReplaced" class="text-slate-300 ml-0.5">↕</span>
                             </th>
-                            <th style="width: 130px; text-align: center;">操作</th>
+                            <th style="width: 125px; min-width: 125px; text-align: center;">操作</th>
                         </tr>
                     </thead>
                     <tbody id="resourcesTableBody">

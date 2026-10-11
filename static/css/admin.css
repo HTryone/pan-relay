@@ -526,6 +526,16 @@ body.admin-body::before {
     color: var(--admin-slate-800);
 }
 
+.text-truncate {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.d-inline-block {
+    display: inline-block !important;
+}
+
 /* --------------------------------------------------------------------------
    Table Row Action Buttons (Refined, Compact, Harmonious)
    -------------------------------------------------------------------------- */

@@ -889,6 +889,20 @@ function renderResults(reset = false) {
         });
     });
 
+    // 绑定整卡点击事件（提升移动端触控体验）
+    resultContainer.querySelectorAll('.result-item:not([data-card-bound="true"])').forEach(item => {
+        item.setAttribute('data-card-bound', 'true');
+        item.addEventListener('click', function (e) {
+            if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.link-health-badge')) {
+                return;
+            }
+            const btn = this.querySelector('.view-button, .copy-button');
+            if (btn) {
+                btn.click();
+            }
+        });
+    });
+
     // 更新分页状态和加载提示
     if (endIndex >= filteredResults.length) {
         if (isSearchRunning) {
@@ -1138,13 +1152,24 @@ function updateHealthBadgeInDOM(res) {
     });
 }
 
-// --- 无限滚动逻辑 (保持不变) ---
+// --- 无限滚动逻辑（同时支持容器内滚动与移动端整页滚动） ---
 const infiniteScrollHandler = () => {
     const container = scrollableResultsDiv;
-    if ((container.scrollTop + container.clientHeight) >= (container.scrollHeight - 50) && !isFullyLoaded && !isLoadingNextBatch) {
+    if (!container || isFullyLoaded || isLoadingNextBatch) return;
+    if ((container.scrollTop + container.clientHeight) >= (container.scrollHeight - 50)) {
         loadNextPage();
     }
 };
+
+const windowScrollHandler = () => {
+    if (!scrollableResultsDiv || isFullyLoaded || isLoadingNextBatch) return;
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.documentElement.scrollHeight - 120;
+    if (scrollPosition >= threshold) {
+        loadNextPage();
+    }
+};
+window.addEventListener('scroll', windowScrollHandler, { passive: true });
 
 function loadNextPage() {
     isLoadingNextBatch = true;

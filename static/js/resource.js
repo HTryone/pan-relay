@@ -344,7 +344,7 @@ function renderTable() {
                     ${escapeHtml(resource.name)}
                 </div>
             </td>
-            <td><a href="${resource.share_link}" target="_blank" class="text-truncate d-inline-block" style="max-width: 250px;">${resource.share_link}</a></td>
+            <td><a href="${escapeHtml(resource.share_link)}" target="_blank" class="resource-link-cell text-truncate d-inline-block" title="${escapeHtml(resource.share_link)}">${escapeHtml(resource.share_link)}</a></td>
             <td>${resource.cloud_name || '-'}</td>
             <td>${resource.type || '-'}</td>
             <td>${renderHealthStatusBadge(resource.health_status, resource.health_message, resource.checked_at)}</td>

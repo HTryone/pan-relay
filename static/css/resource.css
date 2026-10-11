@@ -202,20 +202,25 @@
 }
 
 .data-table-shell {
+    width: 100%;
     overflow-x: auto;
     overflow-y: visible;
     position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 .data-table-shell .table {
     table-layout: fixed;
+    min-width: 1080px;
+    width: 100%;
     border: 1px solid rgba(148, 163, 184, 0.14);
-    border-radius: 20px;
+    border-radius: 16px;
     overflow: visible;
 }
 
 .data-table-shell .table thead th {
     background: rgba(248, 250, 252, 0.98);
+    white-space: nowrap;
 }
 
 .data-table-shell table th,
@@ -223,7 +228,23 @@
     text-align: center;
     vertical-align: middle;
     padding: 10px 12px;
-    word-break: break-word;
+}
+
+.resource-link-cell {
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #2563eb;
+    font-size: 0.78rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.resource-link-cell:hover {
+    text-decoration: underline;
+    color: #1d4ed8;
 }
 
 textarea::placeholder {
@@ -642,6 +663,12 @@ textarea::placeholder {
     .resource-hero .admin-stat-card {
         padding-left: 18px;
         padding-right: 18px;
+    }
+
+    .admin-search-wrap,
+    .admin-search-wrap .admin-search-input,
+    .admin-search-wrap .admin-search-input:focus {
+        width: 100% !important;
     }
 
     .resource-batch-toolbar {
