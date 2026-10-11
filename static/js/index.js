@@ -433,6 +433,14 @@ function performSearch() {
         return;
     }
 
+    // 本地预校验：与后端 min_keyword_length 保持一致，
+    // 避免关键词过短时 EventSource 收到 400 却只能显示笼统的「服务器异常」
+    const MIN_KEYWORD_LEN = 1;
+    if (keyword.length < MIN_KEYWORD_LEN) {
+        showAlertModal(`搜索关键词过短，请至少输入 ${MIN_KEYWORD_LEN} 个字符`, 'warning', '搜索提示');
+        return;
+    }
+
     // 1. 初始化状态和界面
     if (searchShell) {
         searchShell.classList.remove('hidden');
@@ -519,7 +527,13 @@ function performSearch() {
     eventSource.onerror = function (error) {
         console.error('EventSource 错误:', error);
         eventSource.close();
-        resultContainer.innerHTML = '<p class="text-center text-danger p-4">❌ 搜索连接出错或服务器异常。</p>';
+        // EventSource 无法读取响应体（SSE 协议限制），拿不到后端的具体错误信息。
+        // 因此给出可操作的排查提示，而不是笼统的「服务器异常」。
+        resultContainer.innerHTML = [
+            '<p class="text-center text-danger p-4 mb-1">❌ 搜索请求失败，未能获取结果。</p>',
+            '<p class="text-center text-slate-500 text-sm">可能原因：关键词过短、请求过于频繁（每分钟次数超限），或网络中断。</p>',
+            '<p class="text-center text-slate-500 text-sm">请稍等片刻后重试，或更换关键词。</p>'
+        ].join('');
         finalizeSearch(true);
     };
 }
