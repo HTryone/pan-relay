@@ -47,7 +47,7 @@ def api_status():
     mode_config = get_api_mode_config()
     return jsonify({
         "success": True,
-        "service": "taotao",
+        "service": "songshu",
         "version": "1.0.0",
         "status": "healthy",
         "api_mode": mode_config,

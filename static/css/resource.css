@@ -12,7 +12,7 @@
     padding: 8px 12px;
     border-radius: 999px;
     background: rgba(245, 191, 96, 0.14);
-    color: #b7791f;
+    color: #115e59;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -622,7 +622,7 @@ textarea::placeholder {
 }
 
 #addResourceModal legend {
-    color: #b7791f;
+    color: #115e59;
 }
 
 #editResourceModal legend {

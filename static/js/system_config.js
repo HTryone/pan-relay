@@ -683,7 +683,7 @@ async function loadTransferTargetDirConfig() {
         const data = await response.json();
         const input = document.getElementById('transferTargetDirInput');
         const badge = document.getElementById('transferTargetDirBadge');
-        const dir = (data.target_dir !== undefined && data.target_dir !== null) ? data.target_dir : '淘淘资源分享';
+        const dir = (data.target_dir !== undefined && data.target_dir !== null) ? data.target_dir : '松鼠资源分享';
 
         if (input) {
             input.value = dir;
@@ -699,7 +699,7 @@ async function loadTransferTargetDirConfig() {
 
 async function saveTransferTargetDirConfig() {
     const input = document.getElementById('transferTargetDirInput');
-    const target_dir = input ? input.value.trim() : '淘淘资源分享';
+    const target_dir = input ? input.value.trim() : '松鼠资源分享';
 
     try {
         const response = await fetch('/admin/api/transfer-target-dir', {

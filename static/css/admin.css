@@ -1,5 +1,5 @@
 /* ==========================================================================
-   淘淘资源 Admin Console - Enterprise Modern Design System
+   松鼠资源 Admin Console - Enterprise Modern Design System
    Faithfully inspired by Ucmao-Pro (admin_modern) & Modern Tailwind/shadcn UI
    ========================================================================== */
 
@@ -318,7 +318,7 @@ body.admin-body::before {
 }
 
 .cred-status-dot.invalid {
-    background-color: #f59e0b;
+    background-color: #0d9488;
     box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
 }
 
@@ -1327,7 +1327,7 @@ textarea.form-control.font-mono {
     color: #b45309;
 }
 .dynamic-card-status-badge.status-invalid .status-dot {
-    background-color: #f59e0b;
+    background-color: #0d9488;
 }
 
 .dynamic-card-status-badge.status-missing {

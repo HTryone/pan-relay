@@ -46,7 +46,7 @@
     padding: 8px 12px;
     border-radius: 999px;
     background: rgba(245, 191, 96, 0.14);
-    color: #b7791f;
+    color: #115e59;
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -319,7 +319,7 @@
 }
 
 .modal-form-cool .form-section legend {
-    color: #b7791f;
+    color: #115e59;
 }
 
 .modal-form-warm .form-section legend {
@@ -549,7 +549,7 @@
 }
 
 .frontend-link-mode-card:has(.frontend-link-mode-radio:checked) {
-    border-color: #e4a846;
+    border-color: #0d9488;
     background: #fff7e7;
     box-shadow: inset 0 0 0 1px rgba(240, 182, 61, 0.16);
 }
@@ -596,7 +596,7 @@
 }
 
 .frontend-link-mode-card:has(.frontend-link-mode-radio:checked) .frontend-link-mode-switch {
-    background: #e4a846;
+    background: #0d9488;
 }
 
 .frontend-link-mode-card:has(.frontend-link-mode-radio:checked) .frontend-link-mode-switch::after {

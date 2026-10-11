@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {# SEO：站点名与简介可在首页模板用 set 覆盖 #}
-    {% set site_name = site_name | default('淘淘资源') %}
-    {% set site_desc = site_desc | default('淘淘资源 - 全网网盘资源聚合搜索，快速查找影视、短剧、动漫、电子书、软件等资源，支持夸克、百度、阿里、UC、迅雷等主流网盘。') %}
-    <title>{% block title %}淘淘资源 - 影视短剧资源聚合搜索{% endblock %}</title>
+    {% set site_name = site_name | default('松鼠资源') %}
+    {% set site_desc = site_desc | default('松鼠资源 - 全网网盘资源聚合搜索，快速查找影视、短剧、动漫、电子书、软件等资源，支持夸克、百度、阿里、UC、迅雷等主流网盘。') %}
+    <title>{% block title %}松鼠资源 - 影视短剧资源聚合搜索{% endblock %}</title>
     <meta name="description" content="{{ site_desc }}">
-    <meta name="keywords" content="网盘搜索,资源搜索,夸克网盘,百度网盘,影视资源,短剧资源,网盘资源,淘淘资源">
+    <meta name="keywords" content="网盘搜索,资源搜索,夸克网盘,百度网盘,影视资源,短剧资源,网盘资源,松鼠资源">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#f59e0b">
+    <meta name="theme-color" content="#0d9488">
 
     {# 分享卡片（微信 / TG / QQ / 微博 等） #}
     <meta property="og:type" content="website">
@@ -105,14 +105,14 @@
         }
 
         .footer-copyright a {
-            color: #de9f2d;
+            color: #0f766e;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
         }
 
         .footer-copyright a:hover {
-            color: #b7791f;
+            color: #115e59;
         }
 
         .footer-divider {
@@ -177,7 +177,7 @@
         }
 
         .github-pill-right .star-icon {
-            color: #f59e0b;
+            color: #0d9488;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -218,7 +218,7 @@
             font-size: 0.82rem;
             font-weight: 600;
             color: #fff;
-            background: linear-gradient(135deg, #f59e0b, #de9f2d);
+            background: linear-gradient(135deg, #0d9488, #0f766e);
             border: none;
             border-radius: 9999px;
             text-decoration: none;
@@ -330,19 +330,19 @@
             border-radius: 8px;
             border: 1px solid rgba(222, 159, 45, 0.35);
             background: rgba(255, 248, 235, 0.95);
-            color: #b7791f;
+            color: #115e59;
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
         .disclaimer-star-btn i {
-            color: #f59e0b;
+            color: #0d9488;
         }
 
         .disclaimer-star-btn:hover {
-            background: #f5bf60;
+            background: #5eead4;
             color: #0f172a;
-            border-color: #f5bf60;
+            border-color: #5eead4;
             transform: translateY(-1px);
         }
 
@@ -455,7 +455,7 @@
 <div class="footer-container">
     <div class="container-fluid-custom">
         <div class="footer-copyright">
-            <a id="disclaimerLink">&copy; 淘淘资源</a>
+            <a id="disclaimerLink">&copy; 松鼠资源</a>
             {% if enable_frontend_github %}
             <span class="footer-divider">|</span>
             <a href="https://github.com/ucmao/pan-relay" target="_blank" rel="noopener noreferrer">

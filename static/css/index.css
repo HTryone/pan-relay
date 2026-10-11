@@ -153,7 +153,7 @@
 #searchButton {
     width: 58px;
     font-weight: 600;
-    background: linear-gradient(135deg, #f8ca72, #eeaf46);
+    background: linear-gradient(135deg, #5eead4, #14b8a6);
     border: none;
     color: #1f2937;
     padding: 0;
@@ -182,7 +182,7 @@
 }
 
 #searchButton.searching {
-    background: linear-gradient(135deg, #f5bf60, #dd9f31);
+    background: linear-gradient(135deg, #5eead4, #dd9f31);
 }
 
 #searchButton:hover:not(.searching) {
@@ -385,7 +385,7 @@
 .initial-icon-wrapper i {
     font-size: 1.75rem;
     /* color: var(--brand); */
-    color: #b7791f;
+    color: #115e59;
 }
 
 .initial-prompt-area h3 {
@@ -449,7 +449,7 @@
 
 .filter-btn.active {
     background: linear-gradient(135deg, rgba(245, 191, 96, 0.24), rgba(245, 191, 96, 0.14));
-    color: #b7791f;
+    color: #115e59;
     border-color: rgba(245, 191, 96, 0.5);
     font-weight: 600;
     box-shadow: 0 3px 10px rgba(245, 191, 96, 0.2);
@@ -540,7 +540,7 @@
 }
 
 .filter-toggle-button.has-active-filters {
-    color: #b7791f;
+    color: #115e59;
     background: rgba(255, 248, 235, 0.9);
     border-color: rgba(245, 191, 96, 0.5);
     font-weight: 600;
@@ -578,7 +578,7 @@
 }
 
 .filter-input-wrapper:focus-within {
-    border-color: #f5bf60;
+    border-color: #5eead4;
     box-shadow: 0 0 0 3px rgba(245, 191, 96, 0.18);
     background: #ffffff;
 }
@@ -638,7 +638,7 @@
     font-weight: 600;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #f8ca72, #eeaf46);
+    background: linear-gradient(135deg, #5eead4, #14b8a6);
     color: #362511;
     box-shadow: 0 4px 12px rgba(245, 191, 96, 0.25);
     transition: all 0.2s ease;
@@ -1208,7 +1208,7 @@
     width: 100%;
     min-height: 52px;
     margin-top: 4px;
-    background: linear-gradient(135deg, #f8ca72, #eeaf46);
+    background: linear-gradient(135deg, #5eead4, #14b8a6);
     color: #1f2937;
     border: none;
     border-radius: 18px;
